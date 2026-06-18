@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Подарочная карта · KASHEMIR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- Левая колонка: шаги -->
+  <aside class="rail">
+    <div class="brand">
+      <span class="brand-k">K</span>
+      <span class="brand-name">KASHEMIR</span>
+      <span class="brand-desc">BEAUTY STUDIO</span>
+    </div>
+    <nav class="steps" id="steps">
+      <button class="step" data-step="0"><i>1.</i> Дизайн</button>
+      <button class="step" data-step="1"><i>2.</i> Номинал</button>
+      <button class="step" data-step="2"><i>3.</i> Поздравление</button>
+      <button class="step" data-step="3"><i>4.</i> Данные получателя</button>
+      <button class="step" data-step="4"><i>5.</i> Время</button>
+      <button class="step" data-step="5"><i>6.</i> Оплата</button>
+    </nav>
+  </aside>
+
+  <!-- Правая часть: контент шагов -->
+  <main class="stage">
+    <div class="stage-no" id="stageNo">01</div>
+
+    <!-- 1. ДИЗАЙН -->
+    <section class="panel" data-panel="0">
+      <h1 class="title">выберите дизайн карты</h1>
+      <div class="carousel">
+        <button class="nav prev" id="prevCard" aria-label="Предыдущий">←</button>
+        <div class="card-stage" id="cardStage"></div>
+        <button class="nav next" id="nextCard" aria-label="Следующий">→</button>
+      </div>
+      <div class="dots" id="cardDots"></div>
+      <div class="swatches" id="swatches"></div>
+    </section>
+
+    <!-- 2. НОМИНАЛ -->
+    <section class="panel" data-panel="1">
+      <h1 class="title">выберите номинал</h1>
+      <div class="nominal-wrap">
+        <div class="nominal-preview" id="nominalPreview"></div>
+        <div class="nominal-pick">
+          <div class="amount-scroll" id="amountScroll"></div>
+          <div class="amount-big"><span id="amountBig">4 000</span> ₽</div>
+          <div class="amount-hint">этого хватит на <b id="amountHint">маникюр с гель-лаком</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ПОЗДРАВЛЕНИЕ -->
+    <section class="panel" data-panel="2">
+      <h1 class="title">поздравление</h1>
+      <div class="greet-wrap">
+        <div class="greet-preview" id="greetPreview"></div>
+        <div class="greet-form">
+          <label class="fld"><span>от кого</span>
+            <input id="senderInput" type="text" maxlength="24" placeholder="Михаил"></label>
+          <label class="fld"><span>кому</span>
+            <input id="recipientInput" type="text" maxlength="24" placeholder="Екатерина"></label>
+          <label class="fld"><span>текст поздравления</span>
+            <textarea id="messageInput" rows="3" maxlength="200" placeholder="Поздравляю! Пусть забота о себе станет приятным ритуалом."></textarea></label>
+          <div class="greet-actions">
+            <button class="btn-gen" id="genBtn"><span class="spark">✦</span> сгенерировать поздравление</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ДАННЫЕ ПОЛУЧАТЕЛЯ -->
+    <section class="panel" data-panel="3">
+      <h1 class="title">данные получателя</h1>
+      <div class="recip-wrap">
+        <div class="recip-preview" id="recipPreview"></div>
+        <div class="recip-form">
+          <p class="lead">карта придёт ссылкой в СМС или уведомлении</p>
+          <label class="fld phone"><span>номер телефона</span>
+            <input id="phoneInput" type="tel" inputmode="tel" placeholder="+7 ___-___-__-__"></label>
+          <label class="toggle">
+            <span><b>прислать PDF на почту</b><i>если хотите подарить лично</i></span>
+            <input type="checkbox" id="pdfToggle"><span class="track"></span>
+          </label>
+          <label class="fld email" id="emailField" hidden><span>e-mail</span>
+            <input id="emailInput" type="email" placeholder="name@mail.ru"></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ВРЕМЯ -->
+    <section class="panel" data-panel="4">
+      <h1 class="title">время отправки</h1>
+      <div class="time-wrap">
+        <div class="time-preview" id="timePreview"></div>
+        <div class="time-form">
+          <div class="seg">
+            <button class="seg-btn active" data-time="now">сейчас</button>
+            <button class="seg-btn" data-time="later">выбрать время</button>
+          </div>
+          <p class="time-note" id="timeNote">отправим карту в СМС или уведомлении<br><b id="timeWhen"></b></p>
+          <label class="fld" id="dtField" hidden><span>дата и время</span>
+            <input id="dtInput" type="datetime-local"></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. ОПЛАТА -->
+    <section class="panel" data-panel="5">
+      <h1 class="title">оплата</h1>
+      <div class="pay-wrap">
+        <div class="pay-preview" id="payPreview"></div>
+        <div class="pay-form">
+          <div class="sum-row"><span>номер телефона</span><b id="sumPhone">—</b></div>
+          <div class="sum-row"><span>дата и время доставки</span><b id="sumWhen">—</b></div>
+          <div class="sum-row"><span>дизайн</span><b id="sumDesign">—</b></div>
+          <div class="sum-total"><span>итого</span><div class="total-val"><span id="sumTotal">4 000</span> ₽</div></div>
+          <p class="demo-flag" id="demoFlag" hidden>тестовый режим — реальная оплата не списывается</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Кнопка далее / оплатить -->
+    <button class="fab" id="fab"><span id="fabText">далее</span></button>
+  </main>
+</div>
+
+<script src="cards.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

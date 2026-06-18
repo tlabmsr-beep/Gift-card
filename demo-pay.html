@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Оплата · KASHEMIR</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#3D7337;--pine:#21432A;--gold:#DABD91;--cream:#FFF2D0;--graphite:#231E16;--paper:#FEFCF6;--line:#E7DFCC;--muted:#8C846F}
+*{box-sizing:border-box;margin:0}body{font-family:Manrope,sans-serif;background:linear-gradient(180deg,#FEFCF6,#FBF5E6);min-height:100vh;display:grid;place-items:center;color:var(--graphite);padding:20px}
+.pay{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:40px;max-width:420px;width:100%;box-shadow:0 30px 70px -30px rgba(33,67,42,.4)}
+.k{font-family:Cinzel,serif;font-size:30px;color:var(--forest);text-align:center}
+.desc{text-align:center;font-size:9px;letter-spacing:4px;color:var(--gold);margin:6px 0 28px}
+h2{font-family:Cinzel,serif;font-weight:500;font-size:22px;margin-bottom:6px}
+.muted{color:var(--muted);font-size:14px;margin-bottom:24px}
+.amt{font-family:Cinzel,serif;font-size:40px;margin:18px 0 26px}
+label{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px;font-weight:600}
+input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:Manrope;font-size:16px;background:#fff}
+input:focus{outline:none;border-color:var(--forest)}
+.row{display:flex;gap:12px}
+.btn{width:100%;margin-top:26px;padding:16px;border:none;border-radius:12px;background:var(--graphite);color:var(--cream);font-family:Manrope;font-weight:700;font-size:15px;letter-spacing:1px;cursor:pointer;transition:.25s}
+.btn:hover{background:var(--forest)}
+.flag{background:var(--cream);border-radius:10px;padding:10px 14px;font-size:12px;color:#BE9F6F;margin-bottom:20px;text-align:center}
+.tinkoff{text-align:center;font-size:11px;color:var(--muted);margin-top:18px}
+</style>
+</head>
+<body>
+<div class="pay">
+  <div class="k">KASHEMIR</div><div class="desc">BEAUTY STUDIO</div>
+  <div class="flag">тестовый режим — карта не списывается</div>
+  <h2>Оплата подарочной карты</h2>
+  <p class="muted">введите любые данные — это демонстрация</p>
+  <div class="amt" id="amt">—</div>
+  <label>номер карты</label><input id="cn" placeholder="4300 0000 0000 0777" value="4300 0000 0000 0777">
+  <div class="row" style="margin-top:0">
+    <div style="flex:1"><label>срок</label><input placeholder="12/28" value="12/28"></div>
+    <div style="flex:1"><label>CVC</label><input placeholder="123" value="123"></div>
+  </div>
+  <button class="btn" id="payBtn">Оплатить</button>
+  <p class="tinkoff">безопасная оплата · Тинькофф Касса</p>
+</div>
+<script>
+const p=new URLSearchParams(location.search), order=p.get('order'), amount=p.get('amount');
+document.getElementById('amt').textContent=Number(amount).toLocaleString('ru-RU')+' ₽';
+document.getElementById('payBtn').onclick=async()=>{
+  const b=document.getElementById('payBtn'); b.textContent='Обработка...'; b.disabled=true;
+  await fetch('/api/demo-confirm',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId:order})});
+  setTimeout(()=>location.href='/success.html?order='+order,800);
+};
+</script>
+</body>
+</html>

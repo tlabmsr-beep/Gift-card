@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Готово · KASHEMIR</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--forest:#3D7337;--pine:#21432A;--gold:#DABD91;--cream:#FFF2D0;--graphite:#231E16;--paper:#FEFCF6;--line:#E7DFCC;--muted:#8C846F}
+*{box-sizing:border-box;margin:0}body{font-family:Manrope,sans-serif;background:radial-gradient(900px 500px at 50% -10%,#F1F6ED,transparent),linear-gradient(180deg,#FEFCF6,#FBF5E6);min-height:100vh;display:grid;place-items:center;color:var(--graphite);padding:20px;text-align:center}
+.box{max-width:460px}
+.ring{width:88px;height:88px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;margin:0 auto 26px;animation:pop .6s ease}
+.ring svg{width:40px;height:40px}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.k{font-family:Cinzel,serif;font-size:30px;color:var(--forest)}
+.desc{font-size:9px;letter-spacing:4px;color:var(--gold);margin:6px 0 30px}
+h1{font-family:Cinzel,serif;font-weight:500;font-size:30px;margin-bottom:14px}
+p{color:var(--muted);line-height:1.6;margin-bottom:8px}
+b{color:var(--graphite)}
+.card-prev{width:280px;aspect-ratio:400/252;margin:28px auto 0}
+.card-prev svg{width:100%;height:100%;border-radius:16px;box-shadow:0 24px 56px -28px rgba(33,67,42,.5)}
+a{display:inline-block;margin-top:30px;color:var(--forest);text-decoration:none;font-weight:600;border-bottom:1px solid var(--gold);padding-bottom:2px}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="#3D7337" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg></div>
+  <div class="k">KASHEMIR</div><div class="desc">BEAUTY STUDIO</div>
+  <h1>Карта оплачена</h1>
+  <p id="info">Спасибо! Подарочная карта на <b id="amt">—</b> отправлена получателю.</p>
+  <p>Получатель найдёт её в СМС или уведомлении.</p>
+  <div class="card-prev" id="cardPrev"></div>
+  <a href="/">оформить ещё одну карту</a>
+</div>
+<script src="cards.js"></script>
+<script>
+const order=new URLSearchParams(location.search).get('order');
+fetch('/api/order/'+order).then(r=>r.json()).then(d=>{
+  if(d.ok){
+    document.getElementById('amt').textContent=Number(d.order.amount).toLocaleString('ru-RU')+' ₽';
+    const design=(CARD_DESIGNS.find(c=>c.id===d.order.design)||CARD_DESIGNS[0]);
+    document.getElementById('cardPrev').innerHTML=design.svg(d.order.color||'#21432A');
+  }
+}).catch(()=>{});
+</script>
+</body>
+</html>
